@@ -84,7 +84,7 @@ non escono dalla macchina fisica, quindi l'unica variabile è il codice dello sc
 
 ### Screenshot
 
-> *Screenshot aggiunto dalla VM Ubuntu — vedere immagine nella cartella.*
+![Terminale VM Ubuntu](./screenshots/Scan_1_Localhost.png)
 
 ---
 
