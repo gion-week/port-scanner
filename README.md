@@ -158,12 +158,15 @@ Il modulo `banner.py` distingue due categorie di servizi:
   un banner di benvenuto non appena il client si connette. È sufficiente aprire la
   connessione e leggere.
 
-- **Servizi che aspettano il client** (HTTP su porte 80, 443, 8080, 8443): rimangono
-  in silenzio finché non ricevono una richiesta valida. Per questi viene inviata
-  una probe `HEAD / HTTP/1.0\r\n\r\n` prima di leggere la risposta.
+- **Servizi che aspettano il client** (HTTP su porte 80, 443, 8080, 8443 e CUPS/IPP
+  sulla 631): rimangono in silenzio finché non ricevono una richiesta valida. Per
+  questi viene inviata una probe `HEAD / HTTP/1.0\r\n\r\n` prima di leggere la
+  risposta; dalla risposta viene poi estratto l'header `Server:`, così il banner
+  mostra in modo compatto il software (es. `CUPS/2.4 IPP/2.1`, `Apache/2.4.41`)
+  invece dell'intera risposta HTTP grezza.
 
-**Impatto:** Senza questa distinzione, le porte HTTP restituirebbero sempre `None`
-come banner, anche se il servizio è attivo e identificabile.
+**Impatto:** Senza questa distinzione, le porte HTTP (631 inclusa) restituirebbero
+sempre `None` come banner, anche se il servizio è attivo e identificabile.
 
 ### 5. Decodifica UTF-8 con `errors="replace"`
 
@@ -304,7 +307,7 @@ Risultati scansione per 192.168.1.1
 PORTA      STATO    BANNER
 ------------------------------------------------------------
 22         open     SSH-2.0-OpenSSH_9.3
-80         open     HTTP/1.1 200 OK...
+80         open     Apache/2.4.41 (Ubuntu)
 
 3 porta/e chiusa/e non mostrata/e.
 ```
@@ -321,7 +324,7 @@ PORTA      STATO    BANNER
     },
     "80": {
       "state": "open",
-      "banner": null
+      "banner": "Apache/2.4.41 (Ubuntu)"
     },
     "443": {
       "state": "closed",

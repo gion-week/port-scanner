@@ -74,9 +74,17 @@ non escono dalla macchina fisica, quindi l'unica variabile è il codice dello sc
   inviando una richiesta HTTP e leggendo la risposta. È un buon esempio di
   servizio che non invia un banner automaticamente ma risponde a una probe.
 
+> **Nota di contesto:** a differenza degli scan successivi, questo primo test è
+> stato eseguito sulla VM **Ubuntu** usata per lo sviluppo del programma,
+> collegandosi dal PC host a VSCode via SSH verso la VM. È un passaggio non
+> necessario al test in sé, fatto per pura sperimentazione delle funzioni. Gli
+> scan da 2 a 5 sono invece eseguiti dalla VM **Parrot Security** (vedi sezione
+> *Ambiente di test*), clonando la repo sulla VM per simulare un utente che la
+> scarica e prova lo scanner.
+
 ### Screenshot
 
-> *Screenshot aggiunto dalla VM Parrot Security — vedere immagine nella cartella.*
+> *Screenshot aggiunto dalla VM Ubuntu — vedere immagine nella cartella.*
 
 ---
 
