@@ -1,0 +1,43 @@
+# Port Scanner — Python
+
+## Stack
+- Python 3.14, venv in .venv/ (NON leggere mai questa cartella)
+- Dipendenze: socket, concurrent.futures, argparse, colorama, python-dotenv
+- Test: pytest
+- Ambiente: Ubuntu 25.10 (Virtual Machine, Hypervisor: VMWare Workstation)
+
+## Struttura
+main.py              # entrypoint CLI (argparse)
+scanner/
+  core.py            # logica di scansione TCP (socket, ThreadPoolExecutor)
+  banner.py          # banner grabbing sulle porte aperte
+  output.py          # formattazione output JSON e testo
+  __init__.py
+tests/
+  test_core.py
+  test_output.py
+.env.example         # variabili d'ambiente di riferimento
+requirements.txt     # dipendenze pinned
+
+## Obiettivo del progetto
+Scanner TCP che accetta range IP/porte da CLI, scansiona in parallelo
+con ThreadPoolExecutor, tenta banner grabbing sulle porte aperte,
+produce output JSON e testo. Fa parte di un portfolio per ruolo
+Python Developer Cybersecurity.
+
+## Convenzioni
+- Type hints obbligatori su tutte le funzioni pubbliche
+- Docstring in inglese
+- Nessuna credenziale hardcoded: usare python-dotenv e .env
+- Attivare il venv prima di eseguire: .venv\Scripts\activate
+
+## Eseguire i test
+.venv\Scripts\activate
+pytest tests/
+
+## Cosa NON fare
+- Non leggere o modificare nulla dentro .venv/
+- Non aggiungere dipendenze senza aggiornarle in requirements.txt
+- Non usare subprocess per chiamare tool di sistema come nmap:
+  tutto deve essere implementato in Python puro
+- Non modificare .env.example aggiungendo valori reali

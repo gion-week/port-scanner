@@ -1,0 +1,33 @@
+{
+  "host": "portquiz.net",
+  "ports": {
+    "22": {
+      "state": "open",
+      "banner": null
+    },
+    "80": {
+      "state": "open",
+      "banner": "HTTP/1.1 200 OK\r\nDate: Sat, 27 Jun 2026 09:21:59 GMT\r\nServer: Apache/2.4.29 (Ubuntu)\r\nConnection: close\r\nContent-Type: text/html; charset=UTF-8"
+    },
+    "443": {
+      "state": "open",
+      "banner": "HTTP/1.1 200 OK\r\nDate: Sat, 27 Jun 2026 09:21:59 GMT\r\nServer: Apache/2.4.29 (Ubuntu)\r\nConnection: close\r\nContent-Type: text/html; charset=UTF-8"
+    },
+    "3000": {
+      "state": "open",
+      "banner": null
+    },
+    "8080": {
+      "state": "open",
+      "banner": "HTTP/1.1 200 OK\r\nDate: Sat, 27 Jun 2026 09:22:06 GMT\r\nServer: Apache/2.4.29 (Ubuntu)\r\nConnection: close\r\nContent-Type: text/html; charset=UTF-8"
+    },
+    "8443": {
+      "state": "open",
+      "banner": "HTTP/1.1 200 OK\r\nDate: Sat, 27 Jun 2026 09:22:06 GMT\r\nServer: Apache/2.4.29 (Ubuntu)\r\nConnection: close\r\nContent-Type: text/html; charset=UTF-8"
+    },
+    "9000": {
+      "state": "open",
+      "banner": null
+    }
+  }
+}

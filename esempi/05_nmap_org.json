@@ -1,0 +1,21 @@
+{
+  "host": "nmap.org",
+  "ports": {
+    "22": {
+      "state": "closed",
+      "banner": null
+    },
+    "25": {
+      "state": "closed",
+      "banner": null
+    },
+    "80": {
+      "state": "closed",
+      "banner": null
+    },
+    "443": {
+      "state": "open",
+      "banner": "HTTP/1.1 400 Bad Request\r\nDate: Sat, 27 Jun 2026 09:22:20 GMT\r\nServer: Apache/2.4.6 (CentOS)\r\nContent-Length: 564\r\nConnection: close\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>400 Bad Request</title>\n</head><body>\n<h1>Bad Request</h1>\n<p>Your browser sent a request that this server could not understand.<br />\nReason: You're speaking plain HTTP to an SSL-enabled server port.<br />\n Instead use the HTTPS scheme to access this URL, please.<br />\n</p>\n<p>Additionally, a 400 Bad Request\nerror was encountered while trying to use an ErrorDocument to handle the request.</p>\n<hr>\n<address>Apache/2.4.6 (CentOS) Server at issues.nmap.org Port 443</address>\n</body></html>"
+    }
+  }
+}

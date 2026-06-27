@@ -1,0 +1,25 @@
+{
+  "host": "scanme.nmap.org",
+  "ports": {
+    "22": {
+      "state": "open",
+      "banner": "SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.13"
+    },
+    "53": {
+      "state": "open",
+      "banner": null
+    },
+    "80": {
+      "state": "open",
+      "banner": "HTTP/1.1 200 OK\r\nDate: Sat, 27 Jun 2026 09:24:17 GMT\r\nServer: Apache/2.4.7 (Ubuntu)\r\nAccept-Ranges: bytes\r\nVary: Accept-Encoding\r\nConnection: close\r\nContent-Type: text/html"
+    },
+    "9929": {
+      "state": "open",
+      "banner": "\u0001\u0001\u0000\u0018\u0000\ufffd/;j?\ufffd\ufffd\u0000\u0000\u0000\u0000\u007f\ufffd\u001b\u000e\ufffd%,8{K\f\u012d\ufffd\ufffd^\ufffdN!\ufffd\";7XFJp{)\ufffd\ufffdT\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\ufffdl\ufffdi\ufffdQ9\b\u0012A\u0004\ufffdZp\ufffd\ufffdsl\ufffd\ufffd\ufffd{\u037e%\ufffd\ufffdD_\ufffdF"
+    },
+    "31337": {
+      "state": "open",
+      "banner": null
+    }
+  }
+}

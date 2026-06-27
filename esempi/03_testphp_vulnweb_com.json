@@ -1,0 +1,41 @@
+{
+  "host": "testphp.vulnweb.com",
+  "ports": {
+    "21": {
+      "state": "closed",
+      "banner": null
+    },
+    "22": {
+      "state": "closed",
+      "banner": null
+    },
+    "25": {
+      "state": "closed",
+      "banner": null
+    },
+    "80": {
+      "state": "closed",
+      "banner": null
+    },
+    "443": {
+      "state": "closed",
+      "banner": null
+    },
+    "3306": {
+      "state": "closed",
+      "banner": null
+    },
+    "5432": {
+      "state": "closed",
+      "banner": null
+    },
+    "8080": {
+      "state": "closed",
+      "banner": null
+    },
+    "8443": {
+      "state": "closed",
+      "banner": null
+    }
+  }
+}
