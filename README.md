@@ -205,7 +205,7 @@ nel codice versionato.
 
 ```bash
 # 1. Clona il repository
-git clone <url-del-repository>
+git clone https://github.com/gion-week/port-scanner.git
 cd port-scanner
 
 # 2. Crea e attiva il virtual environment
