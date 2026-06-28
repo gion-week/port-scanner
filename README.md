@@ -355,7 +355,7 @@ Ogni scan include:
 - La tabella dei risultati con porte, stato e banner
 - Il file JSON prodotto dallo scanner
 - L'analisi di cosa dimostra il caso specifico
-- Uno screenshot dalla VM Parrot Security
+- Uno screenshot dell'esecuzione (Scan 1 dalla VM Ubuntu di sviluppo, Scan 2-5 dalla VM Parrot Security)
 
 → **[Leggi la documentazione completa degli esempi](esempi/README.md)**
 
@@ -419,7 +419,8 @@ port-scanner/
 │   ├── 02_scanme_nmap_org.json     # scan scanme.nmap.org
 │   ├── 03_testphp_vulnweb_com.json # scan testphp.vulnweb.com (tutte chiuse)
 │   ├── 04_portquiz_net.json        # scan portquiz.net (tutte aperte)
-│   └── 05_nmap_org.json            # scan nmap.org
+│   ├── 05_nmap_org.json            # scan nmap.org
+│   └── screenshots/                # screenshot dei 5 scan (VM Ubuntu/Parrot)
 ├── .env.example         # Template variabili d'ambiente
 ├── .gitignore
 ├── requirements.txt

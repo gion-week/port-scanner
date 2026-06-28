@@ -11,7 +11,7 @@
     },
     "80": {
       "state": "open",
-      "banner": "HTTP/1.1 200 OK\r\nDate: Sat, 27 Jun 2026 09:24:17 GMT\r\nServer: Apache/2.4.7 (Ubuntu)\r\nAccept-Ranges: bytes\r\nVary: Accept-Encoding\r\nConnection: close\r\nContent-Type: text/html"
+      "banner": "Apache/2.4.7 (Ubuntu)"
     },
     "9929": {
       "state": "open",

@@ -92,11 +92,16 @@ non escono dalla macchina fisica, quindi l'unica variabile è il codice dello sc
 
 **Comando:**
 ```bash
-python main.py scanme.nmap.org -p 22,53,80,9929,31337 --banner -t 2.0
+python main.py scanme.nmap.org -p 22,53,80,9929,31337 --banner -t 4.0
 ```
 
 `scanme.nmap.org` è il server pubblico mantenuto dal progetto nmap specificamente
 per permettere a chiunque di testare scanner e strumenti di rete.
+
+> **Nota sul timeout:** è stato usato `-t 4.0` (4 s) invece del default perché
+> `scanme.nmap.org` applica rate-limiting. Con un timeout più basso (es. 2 s) le
+> porte 9929 e 31337, più lente a rispondere, venivano classificate come chiuse;
+> alzando il timeout tutte e 5 le porte risultano correttamente aperte.
 
 **Risultati:**
 
@@ -104,7 +109,7 @@ per permettere a chiunque di testare scanner e strumenti di rete.
 |---|---|---|---|
 | 22/tcp | OPEN | SSH | `SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.13` |
 | 53/tcp | OPEN | DNS | — (protocollo binario, no banner testuale) |
-| 80/tcp | OPEN | HTTP | `HTTP/1.1 200 OK — Server: Apache/2.4.7 (Ubuntu)` |
+| 80/tcp | OPEN | HTTP | `Apache/2.4.7 (Ubuntu)` |
 | 9929/tcp | OPEN | ncat (echo server) | Dati binari |
 | 31337/tcp | OPEN | ncat (porta di test) | — |
 
@@ -124,10 +129,11 @@ del banner grabbing.
   non un protocollo testuale. Questo dimostra un limite intrinseco del banner grabbing
   basato su testo.
 
-- **Porta 80 (HTTP):** La nostra probe `HEAD / HTTP/1.0` ha ottenuto una risposta
-  completa che identifica `Apache/2.4.7` su Ubuntu. Senza la probe il server non
-  avrebbe inviato nulla (HTTP aspetta il client). Questo giustifica la mappa `PROBES`
-  in `banner.py`.
+- **Porta 80 (HTTP):** La nostra probe `HEAD / HTTP/1.0` ha ottenuto una risposta da
+  cui lo scanner estrae l'header `Server`, restituendo il banner compatto
+  `Apache/2.4.7 (Ubuntu)` invece dell'intera risposta HTTP grezza. Senza la probe il
+  server non avrebbe inviato nulla (HTTP aspetta il client): questo giustifica la mappa
+  `PROBES` in `banner.py`.
 
 - **Porta 9929 (ncat):** Il server ha inviato dati binari, non testo. Il nostro
   `decode("utf-8", errors="replace")` ha convertito i byte non validi in `�`
@@ -138,7 +144,7 @@ del banner grabbing.
 
 ### Screenshot
 
-> *Screenshot aggiunto dalla VM Parrot Security — vedere immagine nella cartella.*
+![Scan 2 — scanme.nmap.org dalla VM Parrot Security](./screenshots/Scan_2_Scanme.png)
 
 ---
 
@@ -178,7 +184,7 @@ due comportamenti fondamentali.
 
 ### Screenshot
 
-> *Screenshot aggiunto dalla VM Parrot Security — vedere immagine nella cartella.*
+![Scan 3 — testphp.vulnweb.com dalla VM Parrot Security](./screenshots/Scan_3_Vulnweb.png)
 
 ---
 
@@ -199,11 +205,11 @@ correttamente su molte porte aperte.
 | Porta | Stato | Servizio identificato | Banner |
 |---|---|---|---|
 | 22/tcp | OPEN | — | — |
-| 80/tcp | OPEN | HTTP | `HTTP/1.1 200 OK — Server: Apache/2.4.29 (Ubuntu)` |
-| 443/tcp | OPEN | HTTP | `HTTP/1.1 200 OK — Server: Apache/2.4.29 (Ubuntu)` |
+| 80/tcp | OPEN | HTTP | `Apache/2.4.29 (Ubuntu)` |
+| 443/tcp | OPEN | HTTP | `Apache/2.4.29 (Ubuntu)` |
 | 3000/tcp | OPEN | — | — |
-| 8080/tcp | OPEN | HTTP | `HTTP/1.1 200 OK — Server: Apache/2.4.29 (Ubuntu)` |
-| 8443/tcp | OPEN | HTTP | `HTTP/1.1 200 OK — Server: Apache/2.4.29 (Ubuntu)` |
+| 8080/tcp | OPEN | HTTP | `Apache/2.4.29 (Ubuntu)` |
+| 8443/tcp | OPEN | HTTP | `Apache/2.4.29 (Ubuntu)` |
 | 9000/tcp | OPEN | — | — |
 
 **File dati:** [04_portquiz_net.json](04_portquiz_net.json)
@@ -223,7 +229,7 @@ correttamente su molte porte aperte.
 
 ### Screenshot
 
-> *Screenshot aggiunto dalla VM Parrot Security — vedere immagine nella cartella.*
+![Scan 4 — portquiz.net dalla VM Parrot Security](./screenshots/Scan_4_Portquiz.png)
 
 ---
 
@@ -244,7 +250,7 @@ di server di produzione con una superficie di attacco ridotta.
 | 22/tcp | CLOSED | — | — |
 | 25/tcp | CLOSED | — | — |
 | 80/tcp | CLOSED | — | — |
-| 443/tcp | OPEN | HTTPS | `HTTP/1.1 400 Bad Request — Server: Apache/2.4.6 (CentOS)` |
+| 443/tcp | OPEN | HTTPS | `Apache/2.4.6 (CentOS)` |
 
 **File dati:** [05_nmap_org.json](05_nmap_org.json)
 
@@ -254,22 +260,21 @@ di server di produzione con una superficie di attacco ridotta.
   assenti dalla superficie pubblica: SSH è probabilmente raggiungibile solo da IP
   autorizzati tramite firewall, HTTP reindirizza tutto su HTTPS.
 
-- **Banner su HTTPS con probe HTTP:** Il banner restituito è un errore `400 Bad Request`
-  con il messaggio *"You're speaking plain HTTP to an SSL-enabled server"*.
-  Questo accade perché la nostra probe `HEAD / HTTP/1.0` è testo in chiaro, non TLS.
-  Il server risponde comunque con un messaggio HTTP in chiaro — sufficiente per
-  identificare `Apache/2.4.6 (CentOS)` e la versione del sistema operativo.
-  In uno scenario reale, questo richiederebbe un handshake TLS completo per
-  ottenere il certificato e il banner HTTPS vero.
+- **Banner su HTTPS con probe HTTP:** La nostra probe `HEAD / HTTP/1.0` è testo in
+  chiaro, non TLS, quindi il server risponde con un `400 Bad Request` (messaggio
+  *"You're speaking plain HTTP to an SSL-enabled server"*). Anche da questa risposta
+  di errore lo scanner estrae l'header `Server`, restituendo il banner compatto
+  `Apache/2.4.6 (CentOS)`. In uno scenario reale, ottenere il certificato e il banner
+  HTTPS vero richiederebbe un handshake TLS completo.
 
 - **Informazioni dal banner di errore:** Anche una risposta 400 contiene dati utili.
-  Il campo `Server: Apache/2.4.6 (CentOS)` indica che il server usa Apache 2.4.6
+  L'header `Server: Apache/2.4.6 (CentOS)` indica che il server usa Apache 2.4.6
   su CentOS — una versione relativamente vecchia che un analista di sicurezza
   verificherebbe nelle liste CVE.
 
 ### Screenshot
 
-> *Screenshot aggiunto dalla VM Parrot Security — vedere immagine nella cartella.*
+![Scan 5 — nmap.org dalla VM Parrot Security](./screenshots/Scan_5_Nmap.png)
 
 ---
 
@@ -282,8 +287,11 @@ esempi/
 ├── 02_scanme_nmap_org.json         # output JSON — scanme.nmap.org
 ├── 03_testphp_vulnweb_com.json     # output JSON — testphp.vulnweb.com
 ├── 04_portquiz_net.json            # output JSON — portquiz.net
-└── 05_nmap_org.json                # output JSON — nmap.org
+├── 05_nmap_org.json                # output JSON — nmap.org
+└── screenshots/
+    ├── Scan_1_Localhost.png        # screenshot — localhost (VM Ubuntu)
+    ├── Scan_2_Scanme.png           # screenshot — scanme.nmap.org (VM Parrot)
+    ├── Scan_3_Vulnweb.png          # screenshot — testphp.vulnweb.com (VM Parrot)
+    ├── Scan_4_Portquiz.png         # screenshot — portquiz.net (VM Parrot)
+    └── Scan_5_Nmap.png             # screenshot — nmap.org (VM Parrot)
 ```
-
-Gli screenshot verranno aggiunti nella stessa cartella non appena eseguiti
-dalla VM Parrot Security.
